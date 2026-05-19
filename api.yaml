@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: Submit Ticket API
+  version: 1.0.0
+  description: Creates an IT support ticket in Firestore.
+servers:
+  - url: https://submit-ticket-893467168670.australia-southeast2.run.app
+paths:
+  /submit-ticket:
+    post:
+      summary: Submit a new IT support ticket
+      operationId: submitTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - corporate_alias
+                - issue
+              properties:
+                corporate_alias:
+                  type: string
+                  description: The user's corporate alias (e.g., jdoe).
+                issue:
+                  type: string
+                  description: Description of the issue the user is experiencing.
+      responses:
+        "200":
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket_id:
+                    type: string
+                  category:
+                    type: string
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "400":
+          description: Missing required fields
+        "500":
+          description: Server error
